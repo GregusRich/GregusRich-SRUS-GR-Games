@@ -39,4 +39,4 @@ class Player:
         :return: A human-readable string representation of the player object.
         :rtype: string
         """
-        return f"Player(uid={self._unique_id}, name={self._player_name})"
+        return f"Player: uid={self._unique_id}, name={self._player_name}"

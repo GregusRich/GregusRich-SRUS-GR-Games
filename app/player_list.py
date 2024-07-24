@@ -4,10 +4,3 @@ class PlayerList:
     """
     def __init__(self):
         self._head = None  # Initialise the head of the list to None.
-
-
-
-
-
-
-
