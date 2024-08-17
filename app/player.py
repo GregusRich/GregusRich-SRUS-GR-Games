@@ -1,13 +1,11 @@
-"""
-A class that represents a player.
-
-Attributes:
-unique_id (str): a unique identifier for the player.
-player_name (str): the name of the player.
-"""
-
-
 class Player:
+    """
+    A class that represents a player.
+
+    Attributes:
+    unique_id (str): a unique identifier for the player.
+    player_name (str): the name of the player.
+    """
     def __init__(self, unique_id: str, player_name: str):
         """
         Initialises the player object with a unique id and a player name.

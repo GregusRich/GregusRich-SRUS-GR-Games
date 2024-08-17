@@ -3,8 +3,11 @@ from app.player import Player
 
 """
 Unit tests for the player class.
-"""
 
+Tests included:
+    - Asserting that the player uid is properly set
+    - Asserting that the player name is properly set
+"""
 
 class TestPlayer(unittest.TestCase):
     def test_uid_property(self):
