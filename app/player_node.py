@@ -1,70 +1,56 @@
+from player import Player
+
 class PlayerNode:
     """
     A class that represents a player node in a doubly linked list of players.
     """
-    def __init__(self, player):
+    def __init__(self, player: Player):
         """
-        Initialise a player node with pointers to the next_node and previous_node node.
+        Initialise a player node with pointers to the next_node and previous_node.
 
         :param player: Represents a player object.
         """
         self._player = player
-        self._next_node = None  # a pointer to the next_node node
-        self._previous_node = None  # a pointer to the previous_node node
+        self._next_node = None  # A pointer to the next node
+        self._previous_node = None  # A pointer to the previous node
 
     @property
-    def player(self):
-        """
-        :return: the player object.
-        """
+    def player(self) -> Player:
         return self._player
 
     @property
     def next_node(self):
         """
-        :return: the player next_node node.
+        :return: The next node in the list, or None if there is no next node.
         """
         return self._next_node
 
     @next_node.setter
-    def next_node(self, next_node):
+    def next_node(self, next_node) -> None:
         """
-        Sets the next_node node.
-
-        :param next_node: the next_node of the player object.
-        :type next_node: PlayerNode
+        Sets the next node.
         """
         self._next_node = next_node
 
     @property
     def previous_node(self):
         """
-        :return: the player previous_node node.
+        :return: The previous node in the list, or None if there is no previous node.
         """
         return self._previous_node
 
     @previous_node.setter
-    def previous_node(self, previous_node):
+    def previous_node(self, previous_node) -> None:
         """
-        Sets the previous_node node.
-
-        :param previous_node: the previous_node node of the player object.
-        :type previous_node: PlayerNode
+        Sets the previous node.
         """
         self._previous_node = previous_node
 
     @property
-    def key(self):
-        """
-        :return: the unique id of the player.
-        """
+    def key(self) -> str:
         return self._player.uid
 
     def __str__(self) -> str:
-        """
-        :return: a human-readable string of the node object.
-        :rtype: string
-        """
-        prev_uid = self._previous_node.uid if self._previous_node else "None"
-        next_uid = self._next_node.uid if self._next_node else "None"
+        prev_uid = self._previous_node.key if self._previous_node else "None"
+        next_uid = self._next_node.key if self._next_node else "None"
         return f"Node: player={self._player}, previous_node uid={prev_uid}, next_node uid={next_uid}"

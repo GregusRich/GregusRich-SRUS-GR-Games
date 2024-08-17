@@ -10,6 +10,9 @@ Tests included:
     - Appending a node to a list that is not empty
     - If the list is empty the head is None
     - That the head references are correctly replaced when appending a new node
+    - Appending a node to an empty list at the tail (node should become the tail node)
+    - Appending a node to a list that is not empty at the tail
+    - That the tail references are correctly replaced when appending a new node
 """
 
 
@@ -18,7 +21,7 @@ class TestPlayerList(unittest.TestCase):
     def test_append_node_to_empty_list(self):
         player_list = PlayerList()
         player1 = Player("12345", "Greg")
-        player_list.append_node(player1)
+        player_list.append_node_to_head(player1)
         self.assertEqual(player_list._head.player.uid, "12345")
         self.assertEqual(player_list._head.player.name, "Greg")
         self.assertIsNone(player_list._head.next_node)  # Since there's only one node, next_node should be None
@@ -29,9 +32,9 @@ class TestPlayerList(unittest.TestCase):
         player1 = Player("12345", "Greg")
         player2 = Player("654321", "Tom")
         player3 = Player("5555555", "Simon")
-        player_list.append_node(player1)
-        player_list.append_node(player2)
-        player_list.append_node(player3)
+        player_list.append_node_to_head(player1)
+        player_list.append_node_to_head(player2)
+        player_list.append_node_to_head(player3)
 
         # player3 "Simon" should be at the head now as it was appended last
         self.assertEqual(player_list._head.player.uid, "5555555")
@@ -59,7 +62,48 @@ class TestPlayerList(unittest.TestCase):
         player_list = PlayerList()
         player1 = Player("12345", "Greg")
         player2 = Player("654321", "Tom")
-        player_list.append_node(player1)
+        player_list.append_node_to_head(player1)
         self.assertEqual(player_list._head.player.uid, "12345")
-        player_list.append_node(player2)
+        player_list.append_node_to_head(player2)
         self.assertEqual(player_list._head.player.uid, "654321")
+
+    # Test appending a node to an empty list and that the node should become the tail node.
+    def test_append_node_to_empty_tail(self):
+        player_list = PlayerList()
+        player1 = Player("12345", "Greg")
+        player_list.append_node_to_tail(player1)
+        self.assertEqual(player_list.tail.player.uid, "12345")
+        self.assertEqual(player_list.tail.player.name, "Greg")
+        self.assertIsNone(player_list.tail.previous_node)  # Since there's only one node, previous_node should be None
+
+    # Test appending a node to a list that is not empty at the tail
+    def test_append_node_to_non_empty_tail(self):
+        player_list = PlayerList()
+        player1 = Player("12345", "Greg")
+        player2 = Player("654321", "Tom")
+        player3 = Player("5555555", "Simon")
+        player_list.append_node_to_tail(player1)
+        player_list.append_node_to_tail(player2)
+        player_list.append_node_to_tail(player3)
+
+        # player1 "Greg" should be at the head since it was added first
+        self.assertEqual(player_list.head.player.uid, "12345")
+        self.assertEqual(player_list.head.player.name, "Greg")
+
+        # player3 "Simon" should be at the tail now as it was appended last
+        self.assertEqual(player_list.tail.player.uid, "5555555")
+        self.assertEqual(player_list.tail.player.name, "Simon")
+
+        # player2 "Tom" should be between player1 and player3
+        self.assertEqual(player_list.head.next_node.player.uid, "654321")
+        self.assertEqual(player_list.tail.previous_node.player.uid, "654321")
+
+    # Test that the tail references are correctly replaced when appending a new node.
+    def test_tail_replacement(self):
+        player_list = PlayerList()
+        player1 = Player("12345", "Greg")
+        player2 = Player("654321", "Tom")
+        player_list.append_node_to_tail(player1)
+        self.assertEqual(player_list.tail.player.uid, "12345")
+        player_list.append_node_to_tail(player2)
+        self.assertEqual(player_list.tail.player.uid, "654321")
