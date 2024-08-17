@@ -1,4 +1,5 @@
 from app.player_node import PlayerNode
+from app.player import Player
 
 class PlayerList:
     """
@@ -158,3 +159,28 @@ class PlayerList:
         :rtype: bool
         """
         return self._head is None and self._tail is None
+
+    """
+    Displays the entire list from head to tail
+    """
+    def display(self, forward: bool = True) -> None:
+        """
+        Displays the entire list from head to tail if forward is True,
+        or from tail to head if forward is False.
+
+        :param forward: Direction in which to display the list. Default is True (head to tail).
+        """
+        if self.is_empty():
+            print("The list is empty.")
+            return
+
+        if forward:
+            current_node = self.head
+            while current_node:
+                print(current_node)
+                current_node = current_node.next_node
+        else:
+            current_node = self.tail
+            while current_node:
+                print(current_node)
+                current_node = current_node.previous_node

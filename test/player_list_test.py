@@ -1,6 +1,5 @@
 import unittest
 from app.player_list import PlayerList
-from app.player_node import PlayerNode
 from app.player import Player
 
 """
@@ -18,6 +17,7 @@ Tests included:
 
 
 class TestPlayerList(unittest.TestCase):
+
     # Test appending a node to an empty list and that the node should become the head node.
     def test_append_node_to_empty_list(self):
         player_list = PlayerList()
@@ -154,8 +154,12 @@ class TestPlayerList(unittest.TestCase):
         player_list.delete_by_key("654321")
         self.assertEqual(player_list.head.player.uid, "12345")
         self.assertEqual(player_list.tail.player.uid, "987654")
-        self.assertIsNone(player_list.head.next_node.previous_node)
-        self.assertIsNone(player_list.tail.previous_node.next_node)
+
+        # The head's next node's previous node should point back to the head
+        self.assertEqual(player_list.head.next_node.previous_node, player_list.head)
+
+        # The tail's previous node's next node should point forward to the tail
+        self.assertEqual(player_list.tail.previous_node.next_node, player_list.tail)
 
         # Delete the head node (Greg)
         player_list.delete_by_key("12345")
@@ -180,3 +184,6 @@ class TestPlayerList(unittest.TestCase):
         # Try deleting a non-existent node
         with self.assertRaises(ValueError):
             player_list.delete_by_key("999999")
+
+if __name__ == '__main__':
+    unittest.main()
