@@ -83,6 +83,38 @@ class PlayerList:
             new_node.previous_node = self.tail # Update the new node's previous pointer to point to the old tail
             self.tail = new_node # Update the tail to the new node
 
+    """
+    Deletes the head node in the list
+    """
+    def delete_head(self) -> None:
+        if self.is_empty():
+            raise IndexError("Cannot delete from an empty list.")
+        if self.head == self.tail:
+            # Only one node in the list
+            self.head = None
+            self.tail = None
+        else:
+            # Move head to the next node
+            self.head = self.head.next_node
+            if self.head:
+                self.head.previous_node = None
+
+    """
+    Deletes the tail node in the list
+    """
+    def delete_tail(self) -> None:
+        if self.is_empty():
+            raise IndexError("Cannot delete from an empty list.")
+        if self.head == self.tail:
+            # Only one node in the list
+            self.head = None
+            self.tail = None
+        else:
+            # Move tail to the previous node
+            self.tail = self.tail.previous_node
+            if self.tail:
+                self.tail.next_node = None
+
     def is_empty(self) -> bool:
         """
         Check if the list is empty.

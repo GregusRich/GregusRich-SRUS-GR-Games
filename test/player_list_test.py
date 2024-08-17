@@ -102,8 +102,39 @@ class TestPlayerList(unittest.TestCase):
     def test_tail_replacement(self):
         player_list = PlayerList()
         player1 = Player("12345", "Greg")
-        player2 = Player("654321", "Tom")
         player_list.append_node_to_tail(player1)
         self.assertEqual(player_list.tail.player.uid, "12345")
+
+    # Test deleting the head node from the list
+    def test_delete_head(self):
+        player_list = PlayerList()
+        player1 = Player("12345", "Greg")
+        player2 = Player("654321", "Tom")
+        player_list.append_node_to_head(player1)
+        player_list.append_node_to_head(player2)
+
+        # Delete head (Tom should be removed, Greg should be the new head)
+        player_list.delete_head()
+        self.assertEqual(player_list.head.player.uid, "12345")
+        self.assertIsNone(player_list.head.previous_node)
+
+        # Delete head again (Greg should be removed, list should be empty)
+        player_list.delete_head()
+        self.assertTrue(player_list.is_empty())
+
+    # Test deleting the tail node from the list
+    def test_delete_tail(self):
+        player_list = PlayerList()
+        player1 = Player("12345", "Greg")
+        player2 = Player("654321", "Tom")
+        player_list.append_node_to_tail(player1)
         player_list.append_node_to_tail(player2)
-        self.assertEqual(player_list.tail.player.uid, "654321")
+
+        # Delete tail (Tom should be removed, Greg should be the new tail)
+        player_list.delete_tail()
+        self.assertEqual(player_list.tail.player.uid, "12345")
+        self.assertIsNone(player_list.tail.next_node)
+
+        # Delete tail again (Greg should be removed, list should be empty)
+        player_list.delete_tail()
+        self.assertTrue(player_list.is_empty())
