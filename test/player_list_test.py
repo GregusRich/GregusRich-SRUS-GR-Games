@@ -1,5 +1,6 @@
 import unittest
 from app.player_list import PlayerList
+from app.player_node import PlayerNode
 from app.player import Player
 
 """
@@ -138,3 +139,44 @@ class TestPlayerList(unittest.TestCase):
         # Delete tail again (Greg should be removed, list should be empty)
         player_list.delete_tail()
         self.assertTrue(player_list.is_empty())
+
+    # Test deleting a node by key (regardless of position)
+    def test_delete_node_by_key(self):
+        player_list = PlayerList()
+        player1 = Player("12345", "Greg")
+        player2 = Player("654321", "Tom")
+        player3 = Player("987654", "Simon")
+        player_list.append_node_to_head(player1)
+        player_list.append_node_to_tail(player2)
+        player_list.append_node_to_tail(player3)
+
+        # Delete the middle node (Tom)
+        player_list.delete_by_key("654321")
+        self.assertEqual(player_list.head.player.uid, "12345")
+        self.assertEqual(player_list.tail.player.uid, "987654")
+        self.assertIsNone(player_list.head.next_node.previous_node)
+        self.assertIsNone(player_list.tail.previous_node.next_node)
+
+        # Delete the head node (Greg)
+        player_list.delete_by_key("12345")
+        self.assertEqual(player_list.head.player.uid, "987654")
+        self.assertIsNone(player_list.head.previous_node)
+        self.assertIsNone(player_list.head.next_node)
+
+        # Delete the tail node (Simon), which is now the only node left
+        player_list.delete_by_key("987654")
+        self.assertTrue(player_list.is_empty())
+        self.assertIsNone(player_list.head)
+        self.assertIsNone(player_list.tail)
+
+    # Test attempting to delete a non-existent node by key
+    def test_delete_non_existent_node(self):
+        player_list = PlayerList()
+        player1 = Player("12345", "Greg")
+        player2 = Player("654321", "Tom")
+        player_list.append_node_to_head(player1)
+        player_list.append_node_to_tail(player2)
+
+        # Try deleting a non-existent node
+        with self.assertRaises(ValueError):
+            player_list.delete_by_key("999999")

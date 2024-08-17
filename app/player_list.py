@@ -1,6 +1,5 @@
 from app.player_node import PlayerNode
 
-
 class PlayerList:
     """
     A class to represents a list of players
@@ -114,6 +113,42 @@ class PlayerList:
             self.tail = self.tail.previous_node
             if self.tail:
                 self.tail.next_node = None
+
+    """
+    Deletes a node by it's key. 
+    """
+    def delete_by_key(self, key: str) -> None:
+        current = self.head
+
+        while current is not None:
+            """
+            Traverses the list and removes the node by key, 
+            also taking into account if the node is the head or tail node.
+            """
+            if current.key == key:
+                if current == self.head: # If the node is the head
+                    self.head = current.next_node
+                    if self.head:
+                        self.head.previous_node = None
+                    else:
+                        self.tail = None  # If the list is now empty, reset the tail
+
+                # If the node is the tail
+                elif current == self.tail:
+                    self.tail = current.previous_node
+                    if self.tail:
+                        self.tail.next_node = None
+
+                # If the node isn't the head or tail then update the references to remove it.
+                else:
+                    current.previous_node.next_node = current.next_node
+                    current.next_node.previous_node = current.previous_node
+                return
+
+            current = current.next_node  # Move to the next node
+
+        raise ValueError(f"Node with key {key} not found.")
+
 
     def is_empty(self) -> bool:
         """
