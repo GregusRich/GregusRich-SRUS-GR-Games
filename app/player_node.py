@@ -1,9 +1,11 @@
 from app.player import Player
 
+
 class PlayerNode:
     """
     A class that represents a player node in a doubly linked list of players.
     """
+
     def __init__(self, player: Player):
         """
         Initialise a player node with pointers to the next_node and previous_node.

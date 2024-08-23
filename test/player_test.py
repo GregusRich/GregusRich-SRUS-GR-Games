@@ -9,6 +9,7 @@ Tests included:
     - Asserting that the player name is properly set
 """
 
+
 class TestPlayer(unittest.TestCase):
     def test_uid_property(self):
         player = Player("12345", "Greg")
@@ -21,4 +22,3 @@ class TestPlayer(unittest.TestCase):
         player2 = Player("987654", "Tom")
         self.assertEqual(player.name, "Greg")
         self.assertEqual(player2.name, "Tom")
-

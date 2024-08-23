@@ -1,16 +1,19 @@
 from app.player_node import PlayerNode
 from app.player import Player
+from typing import Any
+
 
 class PlayerList:
     """
     A class to represents a list of players
     """
-    _head = PlayerNode | None # The head is of type Player Node or None (if list is empty)
-    _tail = PlayerNode | None # If list is empty both the head and tail are None
+    _head = PlayerNode | None  # The head is of type Player Node or None (if list is empty)
+    _tail = PlayerNode | None  # If list is empty both the head and tail are None
 
-    def __init__(self, _player_node: PlayerNode | None = None):
-        self._head = None # Initialise the head of the list to None
-        self._tail = None # Initialise the tail of the list to None
+    def __init__(self):
+
+        self._head = None  # Initialise the head of the list to None # don't echo code in comments
+        self._tail = None  # Initialise the tail of the list to None
 
     @property
     def head(self) -> PlayerNode | None:
@@ -24,7 +27,7 @@ class PlayerList:
         """
         Set the head node of the list.
 
-        :param node: The node to set as the head.
+        :param _player_node: The node to set as the head.
         """
         self._head = _player_node
 
@@ -49,12 +52,11 @@ class PlayerList:
     Inserts a node at the head of the list
     """
 
-    def append_node_to_head(self, value: any) -> None:
+    def append_node_to_head(self, value: Any) -> None:
         new_node = PlayerNode(value)  # Creates a new node with the value passed in
         if self.is_empty():
-            """
-            If the list is empty, the new node becomes both the head and the tail node
-            """
+
+            # If the list is empty, the new node becomes both the head and the tail node
             self.head = new_node
             self.tail = new_node
         else:
@@ -70,7 +72,8 @@ class PlayerList:
     instead of having to traverse the entire list like in a singly linked list O(n) (linear time). 
     p.s Thanks for the in class explanation and graphs! 
     """
-    def append_node_to_tail(self, value: any) -> None:
+
+    def append_node_to_tail(self, value: Any) -> None:
         new_node = PlayerNode(value)
         if self.is_empty():
             """
@@ -79,13 +82,14 @@ class PlayerList:
             self.head = new_node
             self.tail = new_node
         else:
-            self.tail.next_node = new_node # Update the current tail to point to the new node
-            new_node.previous_node = self.tail # Update the new node's previous pointer to point to the old tail
-            self.tail = new_node # Update the tail to the new node
+            self.tail.next_node = new_node  # Update the current tail to point to the new node
+            new_node.previous_node = self.tail  # Update the new node's previous pointer to point to the old tail
+            self.tail = new_node  # Update the tail to the new node
 
     """
     Deletes the head node in the list
     """
+
     def delete_head(self) -> None:
         if self.is_empty():
             raise IndexError("Cannot delete from an empty list.")
@@ -102,6 +106,7 @@ class PlayerList:
     """
     Deletes the tail node in the list
     """
+
     def delete_tail(self) -> None:
         if self.is_empty():
             raise IndexError("Cannot delete from an empty list.")
@@ -118,6 +123,7 @@ class PlayerList:
     """
     Deletes a node by it's key. 
     """
+
     def delete_by_key(self, key: str) -> None:
         current = self.head
 
@@ -127,7 +133,7 @@ class PlayerList:
             also taking into account if the node is the head or tail node.
             """
             if current.key == key:
-                if current == self.head: # If the node is the head
+                if current == self.head:  # If the node is the head
                     self.head = current.next_node
                     if self.head:
                         self.head.previous_node = None
@@ -150,7 +156,6 @@ class PlayerList:
 
         raise ValueError(f"Node with key {key} not found.")
 
-
     def is_empty(self) -> bool:
         """
         Check if the list is empty.
@@ -163,6 +168,7 @@ class PlayerList:
     """
     Displays the entire list from head to tail
     """
+
     def display(self, forward: bool = True) -> None:
         """
         Displays the entire list from head to tail if forward is True,
