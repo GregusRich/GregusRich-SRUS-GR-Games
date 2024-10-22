@@ -63,3 +63,11 @@ class PlayerHashMap:
                 total += 1
                 current_node = current_node.next_node
         return total
+
+    def display(self) -> None:
+        """Displays the content of each PlayerList with one or more players. Prints the index of the PlayerList"""
+        for index, player_list in enumerate(self.hashmap):
+            if player_list: # Change to: if not player_list.is_empty(): To view only indexes with players in them.
+                print(f"Index {index}:")
+                player_list.display()
+                print("-" * 20)

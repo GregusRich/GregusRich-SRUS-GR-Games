@@ -169,23 +169,25 @@ class PlayerList:
         self.delete_by_key(uid)
 
     def display(self, forward: bool = True) -> None:
-        """Displays the entire list from head to tail if forward is True,
-        or from tail to head if forward is False.
+        """Displays the players in the list.
 
         :Args
-            forward (bool): Direction in which to display the list. Default is True (head to tail).
+            forward (bool): Direction in which to display the list. True will print head to tail.
         """
         if self.is_empty():
-            print("The list is empty.")
+            print("  (No players)")
             return
 
+        players = []
         if forward:
             current_node = self.head
             while current_node:
-                print(current_node)
+                players.append(str(current_node))
                 current_node = current_node.next_node
         else:
             current_node = self.tail
             while current_node:
-                print(current_node)
+                players.append(str(current_node))
                 current_node = current_node.previous_node
+
+        print("  " + "   (linked node-->)   ".join(players))
