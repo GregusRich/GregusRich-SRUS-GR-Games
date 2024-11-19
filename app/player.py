@@ -16,7 +16,7 @@ class Player:
         self._unique_id: str = unique_id
         self._player_name: str = player_name
         self._score: int = 0
-
+    
     _pearson_table = list(range(256))
     random.seed(42)
     random.shuffle(_pearson_table)
@@ -28,7 +28,6 @@ class Player:
         for char in key:
             hash_ = Player._pearson_table[hash_ ^ ord(char)]
         return hash_
-
 
     def __hash__(self):
         """Returns the hash of the player's UID."""
