@@ -68,3 +68,35 @@ class PlayerBST:
             self._in_order_recursive(current_node.left, players)
             players.append(current_node.player)
             self._in_order_recursive(current_node.right, players)
+
+    def search(self, name : str) -> Player:
+        """Searches for a Player in the BST by name.
+
+        Args:
+            name (str): The name of the Player.
+
+        Returns:
+            Player: The Player object if found, else None.
+        """
+        return self._search_recursive(self.root, name)
+
+    def _search_recursive(self, current_node: PlayerBNode, name: str) -> Player | None:
+        """Recursively searches for a Player in the BST.
+
+        'Remember that the name is the key for each node in the BST'.
+
+        Args:
+            current_node (PlayerBNode): The current node being examined.
+            name (str): The name of the Player to search for.
+
+        Returns:
+            Player: The Player object if found, else None.
+        """
+        if current_node is None:
+            return None
+        if name == current_node.player.name:
+            return current_node.player
+        elif name < current_node.player.name:
+            return self._search_recursive(current_node.left, name)
+        else:
+            return self._search_recursive(current_node.right, name)

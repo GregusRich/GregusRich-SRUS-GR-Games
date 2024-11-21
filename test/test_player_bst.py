@@ -6,6 +6,7 @@ from app.player_bnode import PlayerBNode
 class TestPlayerBST(unittest.TestCase):
     """Unit tests for the PlayerBST class."""
 
+    # region Insertion Tests
     def setUp(self):
         """Set up the test case with a BST and some players."""
         self.bst = PlayerBST()
@@ -67,6 +68,56 @@ class TestPlayerBST(unittest.TestCase):
         self.assertEqual(self.bst.root.right.right.player.name, "Robby")
         # Right child of Robby should be Tim
         self.assertEqual(self.bst.root.right.right.right.player.name, "Tim")
+    # endregion
+
+    # region Searching Tests
+    def test_search_existing_player(self):
+        """Test searching for an existing player in the BST. """
+
+        # Insert players into the BST
+        self.bst.insert(self.player1)
+        self.bst.insert(self.player2)
+        self.bst.insert(self.player3)
+        self.bst.insert(self.player4)
+        self.bst.insert(self.player5)
+
+        # Search for an existing player
+        result = self.bst.search("Greg")
+        self.assertIsNotNone(result)
+        self.assertEqual(result.uid, "1")
+        self.assertEqual(result.name, "Greg")
+
+    def test_search_nonexistent_player(self):
+        """Test searching for a player that does not exist in the BST."""
+        # Insert some players
+        self.bst.insert(self.player1)  # Greg
+        self.bst.insert(self.player3)  # Billy
+
+        # Search for a player not in the BST
+        result = self.bst.search("Tim")  # Not inserted yet
+        self.assertIsNone(result)
+
+    def test_search_in_empty_tree(self):
+        """Test searching in an empty BST."""
+        # BST is empty
+        result = self.bst.search("Greg")
+        self.assertIsNone(result)
+
+    def test_search_after_updating_player(self):
+        """Test searching for a player after updating the node with a duplicate name."""
+        # Insert a player
+        self.bst.insert(self.player1)  # Greg
+
+        # Update the player with the same name but different UID
+        updated_player = Player("6", "Greg")
+        self.bst.insert(updated_player)
+
+        # Search for the player
+        result = self.bst.search("Greg")
+        self.assertIsNotNone(result)
+        self.assertEqual(result.uid, "6")
+        self.assertEqual(result.name, "Greg")
+    # endregion
 
 
 if __name__ == '__main__':
