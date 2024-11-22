@@ -119,6 +119,57 @@ class TestPlayerBST(unittest.TestCase):
         self.assertEqual(result.name, "Greg")
     # endregion
 
+    def test_balance_bst(self):
+        """Test balancing the BST."""
+        # Create an unbalanced BST by inserting nodes in sorted order
+        self.bst = PlayerBST()
+        self.bst.insert(self.player3)  # Billy
+        self.bst.insert(self.player4)  # Bobby
+        self.bst.insert(self.player1)  # Greg
+        self.bst.insert(self.player5)  # Robby
+        self.bst.insert(self.player2)  # Tim
+
+        # Check the height of the tree before balancing
+        height_before = self._get_height(self.bst.root)
+        self.assertEqual(height_before, 5)  # This is equal to the number of nodes
+
+        # Balance the BST
+        self.bst.balance()
+
+        # After balancing, check the new height of the tree
+        height_after = self._get_height(self.bst.root)
+        self.assertEqual(height_after, 3)  # Balanced tree should have height 3
+
+        # Root should be Greg
+        self.assertEqual(self.bst.root.player.name, "Greg")
+
+        # Left child of root should be Bobby
+        self.assertEqual(self.bst.root.left.player.name, "Bobby")
+
+        # Left child of Bobby should be Billy
+        self.assertEqual(self.bst.root.left.left.player.name, "Billy")
+
+        # Right child of root should be Tim
+        self.assertEqual(self.bst.root.right.player.name, "Tim")
+
+        # Left child of Tim should be Robby
+        self.assertEqual(self.bst.root.right.left.player.name, "Robby")
+
+    def _get_height(self, node):
+        """Helper method to calculate the height of the BST.
+
+        Args:
+            node (PlayerBNode): The current node.
+
+        Returns:
+            int: The height of the tree.
+        """
+        if node is None:
+            return 0
+        left_height = self._get_height(node.left)
+        right_height = self._get_height(node.right)
+        return max(left_height, right_height) + 1
+
 
 if __name__ == '__main__':
     unittest.main()
