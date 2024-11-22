@@ -100,3 +100,31 @@ class PlayerBST:
             return self._search_recursive(current_node.left, name)
         else:
             return self._search_recursive(current_node.right, name)
+
+    def balance(self):
+        """Balances the BST by creating a new Balanced BST from the sorted list of players."""
+        # Step a: Get the sorted list of players
+        players_list = self.in_order_traversal()
+        # Step b and c: Build the balanced BST
+        self._root = self._build_balanced_bst(players_list)
+
+    def _build_balanced_bst(self, players_list: list) -> PlayerBNode | None:
+        """Recursively builds a balanced BST from the sorted list of players.
+
+        Args:
+            players_list (list): The sorted list of Player objects.
+
+        Returns:
+            PlayerBNode: The root node of the balanced BST.
+        """
+        if not players_list:
+            return None
+        # Step b: Pick the middle element as the root
+        mid = len(players_list) // 2
+        root = PlayerBNode(players_list[mid])
+        # Step c1: Recursively builds the tree - makes it the left child of the root
+        root.left = self._build_balanced_bst(players_list[:mid])
+        # Step c2: Recursively builds the tree - makes it the right child of the root
+        root.right = self._build_balanced_bst(players_list[mid + 1:])
+        return root
+
